@@ -1,0 +1,57 @@
+//WSL
+wsl --install -d kali-linux
+wsl --unregister (entorno)  //Desistalar
+
+//MetaSploit
+sudo apt update && sudo apt upgrade -y
+
+sudo apt install -y curl gnupg2 postgresql git-core \
+    libssl-dev libpq-dev libreadline-dev libsqlite3-dev \
+    zlib1g-dev build-essential libxml2-dev libxslt1-dev \
+    libyaml-dev ruby-full
+
+cd ~
+git clone https://github.com/rapid7/metasploit-framework.git
+cd metasploit-framework
+
+gem install bundler
+bundle config set --local without 'development test'
+bundle install
+
+sudo service postgresql start
+
+msfdb init
+    //Si no esta disponible
+    sudo -u postgres createuser msf -P
+    sudo -u postgres createdb msf_database -O msf
+
+./msfconsole
+
+//WSL vr2
+sudo apt-get install build-essential zlib1g zlib1g-dev libxml2 libxml2-dev libxslt-dev locate libreadline6-dev libcurl4-openssl-dev git-core autoconf curl postgresql postgresql-contrib libpq-dev libapr1 libaprutil1 libsvn1 libpcap-dev
+
+git clone https://github.com/rapid7/metasploit-framework.git
+
+cd metasploit-framework
+
+sudo bash -c 'for MSF in $(ls msf*); do ln -s /usr/local/src/metasploit-framework/$MSF /usr/local/bin/$MSF;done'
+
+sudo service postgresql start
+
+msfconsole
+
+//Win-Kex
+https://www.kali.org/docs/wsl/win-kex/#install-win-kex
+
+//Compilar
+gcc *c -o (nombre del archivo)
+./(nombre del archivo) -(flag) (archivo de salida)
+
+//MetaSploit
+msfconsole
+use payload/windows/x64/mesasagebox
+show options
+set (Nombre de la valor) x numero de rars
+generate -f c
+generate -f c -o (nombre).c
+exit
